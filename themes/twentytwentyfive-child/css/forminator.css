@@ -1,0 +1,248 @@
+/* ============================================
+   FORMINATOR FORM STYLING
+   ============================================ */
+
+/* Reserve space for form to prevent layout shift */
+.forminator-ui,
+.forminator-custom-form {
+  min-height: 500px !important;
+  position: relative !important;
+}
+
+/* Loading spinner - more specific and with !important */
+.forminator-ui::after,
+.forminator-custom-form::after {
+  content: "" !important;
+  display: block !important;
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  width: 40px !important;
+  height: 40px !important;
+  margin: -20px 0 0 -20px !important;
+  border: 4px solid #f3f3f3 !important;
+  border-top: 4px solid var(--wp--preset--color--accent-2) !important;
+  border-radius: 50% !important;
+  animation: forminator-spin 1s linear infinite !important;
+  opacity: 1 !important;
+  transition: opacity 0.3s !important;
+  z-index: 10 !important;
+}
+
+/* Hide spinner once form fields are visible */
+.forminator-ui:has(.forminator-field)::after,
+.forminator-custom-form:has(input)::after,
+.forminator-ui:has(.forminator-button)::after {
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+@keyframes forminator-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Fade in form once loaded */
+.forminator-field {
+  animation: forminator-fade-in 0.3s ease-in;
+}
+
+@keyframes forminator-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* !important needed to override Forminator's inline styles and Select2 defaults */
+
+/* Submit Button */
+.forminator-button-submit,
+.forminator-custom-form .forminator-button-submit {
+  background-color: var(--wp--preset--color--accent-2) !important;
+  color: #ffffff !important;
+  border: none !important;
+  padding: 0.75rem 1.5rem !important;
+  font-size: 1rem !important;
+  font-weight: 600 !important;
+  border-radius: 0.375rem !important;
+  cursor: pointer !important;
+  transition: all 0.2s !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+  width: 100% !important;
+}
+
+.forminator-button-submit:hover,
+.forminator-custom-form .forminator-button-submit:hover {
+  opacity: 0.9 !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15) !important;
+}
+
+.forminator-button-submit:active,
+.forminator-custom-form .forminator-button-submit:active {
+  transform: translateY(0) !important;
+}
+
+/* Text Input Fields */
+.forminator-custom-form input[type="text"],
+.forminator-custom-form input[type="email"],
+.forminator-custom-form input[type="tel"],
+.forminator-custom-form input[type="number"],
+.forminator-custom-form input[type="url"],
+.forminator-custom-form textarea,
+.forminator-custom-form select {
+  border: 1px solid var(--wp--preset--color--accent-2) !important;
+}
+
+.forminator-custom-form input[type="text"]:focus,
+.forminator-custom-form input[type="email"]:focus,
+.forminator-custom-form input[type="tel"]:focus,
+.forminator-custom-form input[type="number"]:focus,
+.forminator-custom-form input[type="url"]:focus,
+.forminator-custom-form textarea:focus,
+.forminator-custom-form select:focus {
+  border: 2px solid var(--wp--preset--color--accent-2) !important;
+  outline: none !important;
+  box-shadow: 0 0 0 3px
+    color-mix(in srgb, var(--wp--preset--color--accent-2) 20%, transparent) !important;
+}
+
+/* Checkboxes and Radio Buttons */
+.forminator-custom-form input[type="checkbox"],
+.forminator-custom-form input[type="radio"] {
+  accent-color: var(--wp--preset--color--accent-2) !important;
+}
+
+/* ============================================
+   SELECT2 DROPDOWN STYLING
+   ============================================ */
+
+/* Remove default outlines and borders */
+.select2-container,
+.select2-container *,
+.forminator-select,
+.forminator-select * {
+  outline: none !important;
+}
+
+/* Select2 Selection Box */
+.forminator-custom-form .select2-selection,
+.forminator-custom-form .select2-selection--single,
+.forminator-custom-form .select2-selection--multiple {
+  border: 1px solid var(--wp--preset--color--accent-2) !important;
+}
+
+/* Select2 Focus/Open State */
+.forminator-custom-form .select2-container--focus .select2-selection,
+.forminator-custom-form .select2-container--open .select2-selection {
+  border: 2px solid var(--wp--preset--color--accent-2) !important;
+  box-shadow: 0 0 0 3px
+    color-mix(in srgb, var(--wp--preset--color--accent-2) 20%, transparent) !important;
+}
+
+/* Select2 Dropdown Menu */
+.select2-dropdown {
+  border: 2px solid var(--wp--preset--color--accent-2) !important;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Hover state */
+.forminator-ui[id^="forminator-module-"].forminator-design--default
+  .forminator-select2
+  + .forminator-select
+  .selection
+  .select2-selection--single[role="combobox"]:hover {
+  background-color: color-mix(
+    in srgb,
+    var(--wp--preset--color--accent-2) 15%,
+    transparent
+  ) !important;
+}
+
+/* Focus and open state */
+.forminator-ui[id^="forminator-module-"].forminator-design--default
+  .forminator-select2
+  + .forminator-select.select2-container--open
+  .selection
+  .select2-selection--single[role="combobox"],
+.forminator-ui[id^="forminator-module-"].forminator-design--default
+  .forminator-select2
+  + .forminator-select
+  .selection
+  .select2-selection--single[role="combobox"]:focus {
+  background-color: color-mix(
+    in srgb,
+    var(--wp--preset--color--accent-2) 15%,
+    transparent
+  ) !important;
+}
+
+/* Select2 Options, the background for all options when the dropdown menu is open */
+.select2-results__option {
+  color: #000000 !important;
+}
+
+/* the background color of the entire dropdown menu */
+.forminator-select-dropdown.forminator-dropdown--default {
+  background-color: color-mix(
+    in srgb,
+    var(--wp--preset--color--accent-2) 15%,
+    white
+  ) !important;
+}
+
+/* Highlighted Option (hover) */
+.select2-results__option--highlighted {
+  background-color: var(--wp--preset--color--accent-2) !important;
+  color: #ffffff !important;
+}
+
+/* Selected Option (not highlighted) */
+.select2-results__option[aria-selected="true"]:not(
+    .select2-results__option--highlighted
+  ) {
+  background-color: color-mix(
+    in srgb,
+    var(--wp--preset--color--accent-2) 15%,
+    transparent
+  ) !important;
+  color: #000000 !important;
+  border-left: 3px solid var(--wp--preset--color--accent-2) !important;
+}
+
+/* Select2 Dropdown Arrow */
+.forminator-custom-form .forminator-icon-chevron-down,
+.forminator-custom-form .select2-selection__arrow {
+  color: var(--wp--preset--color--accent-2) !important;
+}
+
+.forminator-custom-form .forminator-icon-chevron-down svg {
+  fill: var(--wp--preset--color--accent-2) !important;
+}
+
+.forminator-custom-form .select2-selection__arrow b {
+  border-color: var(--wp--preset--color--accent-2) transparent transparent
+    transparent !important;
+}
+
+.forminator-custom-form .select2-container--open .select2-selection__arrow b {
+  border-color: transparent transparent var(--wp--preset--color--accent-2)
+    transparent !important;
+}
+
+/* changes the border color of the entire dropdown */
+.forminator-select.forminator-select-dropdown-container--open * {
+  border-color: var(--wp--preset--color--accent-2) !important;
+}
+
+.forminator-label {
+  font-size: 18px !important;
+  padding-bottom: 2px;
+}

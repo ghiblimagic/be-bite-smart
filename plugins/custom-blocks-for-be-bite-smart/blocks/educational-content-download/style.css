@@ -1,0 +1,104 @@
+/* ── educational-content-download-block ──────────────────────────────────── */
+
+.educational-content-download-block {
+  border-bottom: 1px solid #d0e4eb;
+  padding: 16px 32px;
+  display: flex;
+  flex-wrap: wrap; /* viewers are direct children and wrap onto their own row */
+  align-items: center;
+  gap: 16px;
+  transition: background 0.15s;
+}
+
+span.ecd-title {
+  font-size: 11px;
+  margin-bottom: 3px;
+}
+.educational-content-download-block:last-child {
+  border-bottom: none;
+}
+
+.educational-content-download-block:hover {
+  background: #e8f4f8;
+}
+
+/* ── Orange label + title ── */
+.ecd-header {
+  flex: 1;
+  min-width: 160px;
+}
+
+.ecd-title {
+  font-family: "Urbanist", sans-serif;
+  font-size: var(--wp--preset--font-size--medium);
+  font-weight: 800;
+  color: #1a2e35;
+  margin: 0;
+}
+
+/* ── Buttons ── */
+.ecd-buttons {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  flex-shrink: 0;
+}
+
+.ecd-toggle {
+  font-family: "Urbanist", sans-serif;
+  font-weight: 700;
+  font-size: var(--wp--preset--font-size--medium);
+  padding: 8px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    background 0.2s,
+    color 0.2s,
+    border-color 0.2s;
+  /* Solid blue by default (English) */
+  background: #1a6e8a;
+  color: #ffffff;
+  border: 2px solid #1a6e8a;
+}
+
+.ecd-toggle--outline {
+  background: #ffffff;
+  color: #1a6e8a;
+}
+
+.ecd-toggle:hover {
+  background: #155d75;
+  border-color: #155d75;
+  color: #ffffff;
+}
+
+/* on mobile screens, stack the pdf buttons */
+
+@media (max-width: 600px) {
+  .ecd-buttons {
+    width: 100%;
+  }
+
+  .ecd-toggle {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* ── PDF viewers ────────────────────────────────────────────────────────────
+   Direct flex children of the row. flex-basis: 100% wraps them onto their
+   own full-width row beneath the chip, title and buttons — no JS trickery.
+   Hidden by default; ecd-toggle.js sets display:block on open.
+   ─────────────────────────────────────────────────────────────────────────── */
+.ecd-viewer {
+  display: none;
+  flex-basis: 100%;
+  width: 100%;
+  border-top: 1px solid #d0e4eb;
+  padding-top: 12px;
+}
+
+.ecd-viewer.expanded {
+  display: block;
+}

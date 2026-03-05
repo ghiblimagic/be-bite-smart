@@ -1,0 +1,185 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   Video Quote Block
+   Play button styles → shared-block-styles.css via .play-button
+   Video thumbnail, overlay, player → shared-block-styles.css via
+     .video-thumbnail-wrapper, .video-thumbnail, .video-overlay, .video-player
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.video-quote-block {
+  margin-bottom: 2rem;
+}
+
+/* ── Main content wrapper ── */
+.video-quote-content-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+@media (min-width: 900px) {
+  .video-quote-content-wrapper {
+    flex-direction: row;
+    align-items: stretch;
+    gap: 3rem;
+  }
+}
+
+/* ── Video side ── */
+.video-quote-video-side {
+  flex: 1;
+  min-width: 0;
+}
+
+@media (min-width: 900px) {
+  .video-quote-video-side {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+}
+
+/* ── Text side ── */
+.video-quote-text-side {
+  flex: 1;
+  min-width: 0;
+}
+
+@media (min-width: 900px) {
+  .video-quote-text-side {
+    flex: 0 0 50%;
+    max-width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* pushes button to top, blockquote to bottom */
+  }
+}
+
+.video-quote-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* ── Title ── */
+.video-quote-title {
+  font-size: 1.7rem !important;
+  margin-bottom: 2.5rem;
+  margin-top: 0;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .video-quote-title {
+    font-size: 2rem;
+  }
+}
+
+/* ── Thumbnail section ── */
+.video-quote-thumbnail-section {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 0.5rem;
+}
+
+@media (min-width: 900px) {
+  .video-quote-thumbnail-section {
+    max-width: none; /* Remove max-width constraint for larger screens */
+  }
+}
+
+/* ── Thumbnail hover effects ──
+   video-thumbnail-wrapper, video-thumbnail, video-overlay, video-player
+   base styles all live in shared-block-styles.css              */
+.video-quote-container:hover .video-thumbnail img {
+  transform: scale(1.05);
+}
+
+.video-quote-container:hover .video-overlay {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+/* ── Play button size override ──
+   Global .play-button uses 0.75rem padding; this block uses a slightly
+   larger button so we override padding only here.
+   The ::after triangle (optical centering: margin-left: 3px) is also
+   inherited from the global rule.                                        */
+.video-quote-block .play-button {
+  padding: 1rem;
+}
+
+/* ── Watch button ── */
+.video-quote-watch-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: var(--wp--preset--color--accent-2);
+  color: white;
+  padding: 0.75rem 2rem;
+  border-radius: 0.38rem;
+  font-weight: 700;
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s;
+  outline: none;
+  margin: 0 auto 2rem auto;
+  max-width: max-content;
+}
+
+.video-quote-watch-button:hover {
+  background: color-mix(in srgb, var(--wp--preset--color--accent-1) 70%, black);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+  transform: translateY(-1px);
+}
+
+.video-quote-watch-button:active {
+  transform: translateY(0);
+}
+
+/* ── Blockquote ── */
+.video-quote-blockquote {
+  border-left: 4px solid var(--wp--preset--color--accent-1);
+  padding-left: 1.5rem;
+  font-size: 1.3rem;
+  font-style: italic;
+}
+
+@media (min-width: 900px) {
+  .video-quote-blockquote {
+    margin: 0;
+  }
+}
+
+.video-quote-blockquote p {
+  margin: 0;
+  line-height: 1.6;
+}
+
+.video-quote-blockquote cite {
+  display: block;
+  margin-top: 0.5rem;
+  font-style: normal;
+  font-weight: 600;
+}
+
+/* ── Note – Frontend and Editor ── */
+.video-quote-note,
+.video-quote-note span,
+.block-editor-rich-text__editable.video-quote-note,
+.block-editor-rich-text__editable.video-quote-note span {
+  margin-top: 1.5rem !important;
+  margin-bottom: 0 !important; /* Add this */
+  text-align: center;
+  font-style: normal !important;
+  line-height: 1.5 !important;
+}
+
+/* Additional editor-specific override */
+.editor-styles-wrapper .video-quote-note,
+.editor-styles-wrapper .video-quote-note span {
+  color: #1f2937 !important;
+}

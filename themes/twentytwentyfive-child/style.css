@@ -1,0 +1,169 @@
+/*
+Theme Name: child theme
+Template: twentytwentyfive
+*/
+
+/* logic for SM trademark icon */
+:root {
+  --sm-font-size: 0.4em;
+  --sm-vertical-align: super; /* classic trademark position */
+  --sm-line-height: 1;
+  --sm-letter-spacing: 0.5px;
+  --sm-margin-left: 1px;
+
+  /* Fallback - use WordPress color if available, otherwise use hardcoded orange color */
+  --accent-1: var(--wp--preset--color--contrast);
+}
+
+h1,
+h2 {
+  color: var(--wp--preset--color--accent-1);
+  font-weight: 500;
+}
+h2 {
+  font-size: var(--wp--preset--font-size--x-large);
+  font-weight: 800;
+}
+
+h3 {
+  font-weight: 800;
+  color: var(--wp--preset--color--accent-5);
+}
+
+hr.gradient-divider {
+  height: 3px;
+  border: none;
+  background: linear-gradient(90deg, #f5c842, #d4700a 50%, transparent);
+  border-radius: 2px;
+  margin: 28px 0;
+}
+
+strong {
+  font-weight: 600;
+}
+/* dark stats divider */
+hr.stat-divider {
+  border: none;
+  border-top: none !important;
+  height: 4px;
+  width: 60px;
+  background-color: rgba(26, 46, 53, 0.2);
+  border-radius: 2px;
+  margin: 12px auto;
+}
+
+/* styling for chevron up to top button, chevron is made with css */
+button#wpfront-scroll-top-container {
+  background-color: #1f6a8f;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0;
+  color: transparent;
+  border: none;
+  padding: 0;
+  position: fixed;
+}
+button#wpfront-scroll-top-container::after {
+  content: "";
+  width: 12px;
+  height: 12px;
+  border-top: 4px solid white;
+  border-right: 4px solid white;
+  transform: rotate(-45deg);
+  display: block;
+  margin-top: 4px;
+}
+
+/* ages badge for video series */
+p.ages-badge {
+  display: inline-block;
+  background: #f5c842;
+  border-radius: 12px;
+  padding: 5px 14px;
+  font-weight: 800;
+  color: #1a2e35;
+}
+
+#wpfront-scroll-top-container .text-holder {
+  display: none;
+}
+
+/* Don't have focus outline show on button click, only on keyboard navigation */
+.wp-site-blocks :focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Add small "SM" after the site title */
+.wp-block-site-title::after {
+  content: "SM";
+  font-size: var(--sm-font-size);
+  vertical-align: var(--sm-vertical-align);
+  line-height: var(--sm-line-height);
+  letter-spacing: var(--sm-letter-spacing);
+  margin-left: var(--sm-margin-left);
+  display: inline-block;
+}
+
+.sm-mark {
+  font-size: var(--sm-font-size);
+  vertical-align: var(--sm-vertical-align);
+  line-height: var(--sm-line-height);
+  letter-spacing: var(--sm-letter-spacing);
+  margin-left: var(--sm-margin-left);
+}
+
+/* important since twentytwentyfive adds a top margin to main with inline styles by default, so importants the only realistic way to beat out the inline styles specificity */
+main {
+  margin-top: 0 !important;
+}
+
+.entry-content blockquote,
+.wp-block-quote,
+blockquote {
+  border-left: 4px solid var(--wp--preset--color--accent-1);
+}
+
+/* tilt cards on about page */
+.tilt-card {
+  cursor: pointer;
+}
+
+/* mild feedback that prefers reduced motion users will also get */
+.tilt-card:hover {
+  box-shadow: 4px 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .tilt-card {
+    transition:
+      transform 0.25s ease,
+      box-shadow 0.25s ease;
+  }
+
+  .tilt-card:hover {
+    transform: rotate(2deg);
+  }
+}
+
+/* hides content on about page until clicked */
+.show-more-content {
+  display: none;
+}
+
+.show-more-content.is-visible {
+  display: block;
+}
+
+/* carousel v2 image logic */
+.wp-block-cb-carousel-v2 img {
+  max-height: 600px;
+  overflow: hidden;
+  object-fit: contain;
+  margin: 0 auto;
+}

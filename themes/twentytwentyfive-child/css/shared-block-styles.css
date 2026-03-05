@@ -1,0 +1,280 @@
+/* Card container — all three have identical padding, margin, background, orange left border, top/right border, and box-shadow. */
+
+body:not(.block-editor-page) .custom-block-card {
+  position: relative;
+  background: #ffffff;
+  margin-bottom: 5rem;
+  border-top: 1px solid #f3f4f6;
+  border-right: 1px solid #f3f4f6;
+  border-bottom: 1px solid #f3f4f6;
+  border-radius: 0 1rem 1rem 0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.2s;
+  padding: 2.5rem 2.5rem 2.5rem 3.5rem;
+}
+
+body:not(.block-editor-page) .custom-block-card:hover {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px) {
+  body:not(.block-editor-page) .custom-block-card {
+    padding: 1.5rem 1.5rem 1.5rem 2rem;
+  }
+}
+
+/* ORANGE LEFT BORDER */
+
+body:not(.block-editor-page) .custom-block-border {
+  border-left: 4px solid var(--wp--preset--color--accent-1);
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* toggle button styles */
+
+body:not(.block-editor-page) .custom-block-card .block-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-top: 1rem;
+  background-color: #1e5480;
+  color: #ffffff;
+  border: 2px solid #1e5480;
+}
+
+body:not(.block-editor-page) .custom-block-card .block-toggle-btn:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  color: #ffffff;
+  text-decoration: none;
+}
+
+body:not(.block-editor-page) .custom-block-card .block-toggle-btn:active {
+  transform: translateY(0);
+}
+
+/* PDF viewer container */
+
+body:not(.block-editor-page) .custom-block-card .pdf-viewer-container {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #e5e7eb;
+  display: none;
+}
+
+body:not(.block-editor-page) .custom-block-card .pdf-viewer-container.expanded,
+body:not(.block-editor-page) .custom-block-card .pdf-viewer-container.show {
+  display: block;
+}
+
+body:not(.block-editor-page) .custom-block-card .pdf-viewer-container iframe {
+  border-radius: 0.375rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/*  Editor margin — all three blocks have the same editor spacing rule: That one wildcard selector replaces all three individual editor rules at once.*/
+
+.editor-styles-wrapper
+  .block-editor-block-list__block[class*="wp-block-custom"] {
+  margin-bottom: 2rem;
+}
+
+/* Orange play button */
+
+/* ── Play Button (shared) ── */
+.play-button {
+  background: var(--wp--preset--color--accent-1);
+  color: white;
+  padding: 0.75rem;
+  border-radius: 9999px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  z-index: 10;
+  outline: none;
+}
+
+.play-button:hover {
+  background: color-mix(in srgb, var(--wp--preset--color--accent-1) 70%, black);
+  transform: scale(1.1);
+}
+
+.play-button:active {
+  transform: scale(0.95);
+}
+
+.play-button:focus-visible {
+  outline: 2px solid white;
+  outline-offset: 3px;
+  box-shadow:
+    0 0 0 5px rgba(255, 255, 255, 0.3),
+    0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.play-button svg {
+  pointer-events: none;
+  display: block;
+  width: 20px;
+  height: 20px;
+}
+
+.play-button::after {
+  content: "";
+  display: block;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 8px 0 8px 16px;
+  border-color: transparent transparent transparent white;
+  margin-left: 3px;
+}
+
+/*  Video thumbnail, overlay and player */
+
+/* shared-block-styles.css */
+.video-thumbnail-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: #000;
+}
+.video-thumbnail {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+.video-thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+.video-thumbnail.hidden {
+  opacity: 0;
+  pointer-events: none;
+  z-index: -1;
+}
+.video-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+}
+.video-player {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+}
+.video-player iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* BUTTONS
+
+   NOTE: These intentionally do NOT use WordPress native button classes
+   (.wp-block-button / .wp-block-button__link / .wp-element-button).
+
+   WordPress automatically applies a generic :root :where(.wp-element-button)
+   rule that sets background to --contrast (black), which overrides theme
+   accent colors which use .wp-BLOCK-button and cannot be escaped even with more specific wrappers.
+
+   Using a custom class here gives full control via CSS variables while
+   still allowing editors to update colors through Global Styles → Colors. 
+ */
+
+/* ── Toggle buttons ── */
+/* filled button */
+body:not(.block-editor-page) .custom-block-card .block-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.6em 1.2em;
+  font-size: var(--wp--preset--font-size--medium);
+  font-weight: 600;
+  border-radius: 1.2rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-top: 1rem;
+  background-color: var(--wp--preset--color--accent-2);
+  color: var(--wp--preset--color--base);
+  border: 2px solid var(--wp--preset--color--accent-2);
+  text-decoration: none;
+}
+
+body:not(.block-editor-page) .custom-block-card .block-toggle-btn:hover {
+  background-color: transparent;
+  color: var(--wp--preset--color--accent-2);
+  /* transform gives a subtle lift effect, however it looks off if it has a svg next to it. Makes the text look pushed up. */
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-decoration: none;
+}
+
+body:not(.block-editor-page) .custom-block-card .block-toggle-btn:active {
+  transform: translateY(0);
+}
+
+/* outlined buttons */
+
+body:not(.block-editor-page)
+  .custom-block-card
+  .block-toggle-btn.is-style-outline {
+  background-color: transparent;
+  color: var(--wp--preset--color--accent-2);
+  border: 2px solid var(--wp--preset--color--accent-2);
+}
+
+body:not(.block-editor-page)
+  .custom-block-card
+  .block-toggle-btn.is-style-outline:hover {
+  background-color: var(--wp--preset--color--accent-2);
+  color: var(--wp--preset--color--base);
+}
+
+.capitalized-and-colored {
+  display: block;
+  font-family: "Urbanist", sans-serif;
+  font-size: 1.125rem;
+  font-weight: 700;
+  letter-spacing: 2.4px;
+  text-transform: uppercase;
+  color: var(--wp--preset--color--accent-1);
+  margin: 0 0 0.5rem 0;
+}
+
+/* example yellow circle with 1 for education downloads */
+.bright-chip {
+  min-width: 44px;
+  height: 44px;
+  background: var(--wp--preset--color--accent-3);
+  border-radius: 5px;
+  font-weight: 900;
+  font-size: 20px;
+  color: black;
+  /* #1a2e35*/
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
