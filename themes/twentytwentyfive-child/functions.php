@@ -4,7 +4,8 @@ function twentytwentyfive_child_enqueue_styles() {
     wp_enqueue_style( 'twentytwentyfive-parent', get_template_directory_uri() . '/style.css' );
 
     // Enqueue child style
-    wp_enqueue_style( 'twentytwentyfive-child', get_stylesheet_directory_uri() . '/style.css', array('twentytwentyfive-parent') );
+    wp_enqueue_style( 'twentytwentyfive-child', get_stylesheet_directory_uri() . '/style.css', array('twentytwentyfive-parent'), '1.0.1' );
+    //version number so returning visitors browser will download the new file
 
      // Additional partial CSS
     wp_enqueue_style( 'child-navbar', get_stylesheet_directory_uri() . '/css/navbar.css', array('twentytwentyfive-child') );
