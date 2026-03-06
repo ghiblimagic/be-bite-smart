@@ -39,12 +39,11 @@
 /* Photo styling */
 .wp-block-custom-bio-card img {
   width: 100%;
-  max-width: 16rem;
+  max-width: 18rem;
   aspect-ratio: 1;
   object-fit: contain;
   transition: filter 0.7s ease;
   flex-shrink: 0;
-  align-self: flex-start;
 }
 
 .wp-block-custom-bio-card img:hover {
