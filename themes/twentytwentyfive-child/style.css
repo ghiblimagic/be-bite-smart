@@ -15,21 +15,6 @@ Template: twentytwentyfive
   --accent-1: var(--wp--preset--color--contrast);
 }
 
-h1,
-h2 {
-  color: var(--wp--preset--color--accent-1);
-  font-weight: 500;
-}
-h2 {
-  font-size: var(--wp--preset--font-size--x-large);
-  font-weight: 800;
-}
-
-h3 {
-  font-weight: 800;
-  color: var(--wp--preset--color--accent-5);
-}
-
 hr.gradient-divider {
   height: 3px;
   border: none;

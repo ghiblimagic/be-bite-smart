@@ -254,7 +254,6 @@ body:not(.block-editor-page)
 
 .capitalized-and-colored {
   display: block;
-  font-family: "Urbanist", sans-serif;
   font-size: 1.125rem;
   font-weight: 700;
   letter-spacing: 2.4px;
