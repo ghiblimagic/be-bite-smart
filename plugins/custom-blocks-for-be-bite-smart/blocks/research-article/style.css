@@ -60,7 +60,6 @@ body:not(.block-editor-page)
 body:not(.block-editor-page)
   article.wp-block-custom-research-article
   .why-it-matters-content {
-  font-weight: 700;
   margin: 0;
   line-height: 1.7;
   font-size: 1.1rem;
