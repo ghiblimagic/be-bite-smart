@@ -8,8 +8,8 @@ function twentytwentyfive_child_enqueue_styles() {
     //version number so returning visitors browser will download the new file
 
      // Additional partial CSS
-    wp_enqueue_style( 'child-navbar', get_stylesheet_directory_uri() . '/css/navbar.css', array('twentytwentyfive-child') );
-    wp_enqueue_style( 'child-forminator', get_stylesheet_directory_uri() . '/css/forminator.css', array('twentytwentyfive-child') );
+    wp_enqueue_style( 'child-navbar', get_stylesheet_directory_uri() . '/css/navbar.css', array('twentytwentyfive-child'),  '1.0.1' );
+    wp_enqueue_style( 'child-forminator', get_stylesheet_directory_uri() . '/css/forminator.css', array('twentytwentyfive-child'), '1.0.1' );
    // the partial css shared-block-styles is loaded instead in add_action
 }
 add_action( 'wp_enqueue_scripts', 'twentytwentyfive_child_enqueue_styles' );
