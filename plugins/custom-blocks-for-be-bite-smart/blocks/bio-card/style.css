@@ -42,8 +42,6 @@
   max-width: 16rem;
   aspect-ratio: 1;
   object-fit: contain;
-  border: 4px solid #f9fafb;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
   transition: filter 0.7s ease;
   flex-shrink: 0;
   align-self: flex-start;

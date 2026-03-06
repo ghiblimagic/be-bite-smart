@@ -123,7 +123,7 @@ add_action( 'enqueue_block_editor_assets', function () {
         'research-article-editor',
         plugins_url( 'blocks/research-article/style.css', __FILE__ ),
         array(),
-        '1.0'
+        '1.0.1'
     );
 
 // Many blocks are manually enqueued (instead of relying on register_block_type auto-enqueue) because all three use components from
