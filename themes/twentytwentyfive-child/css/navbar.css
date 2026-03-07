@@ -24,7 +24,7 @@ header .wp-block-navigation__container > li::before {
 
 /* Hide pipes on small screens (mobile) */
 @media (max-width: 599px) {
-  .wp-block-navigation__container li + li::before {
+  header .wp-block-navigation__container > li::before {
     content: "";
     margin: 0;
   }
@@ -145,30 +145,64 @@ default and shown only when aria-expanded is true on the toggle button.
 We don't use the .wp-block-navigation__responsive-container parent selector
 here because the submenu ul is a direct child of the nav item, not the
 responsive wrapper — so that selector never matches.
+
+Split layout: the parent link fills the left portion of the row and remains
+fully clickable. The chevron toggle owns a fixed-width zone on the right,
+separated by a visible divider. align-items: stretch ensures the chevron
+zone is always as tall as the link text, even if it wraps.
 ============================================ */
 
 @media (max-width: 600px) {
-  /* Toggle button sits to the right */
+  .wp-block-navigation__responsive-container-content
+    .wp-block-navigation-item__content {
+    font-size: 1.2rem;
+  }
+
+  /* Centred row: label + chevron sit together as a unit */
+  .wp-block-navigation-submenu {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    padding-left: 44px !important;
+    /* padding-left: to push the "Team" submenu parents to the left, so they align with the plain menu items. */
+  }
+
+  .wp-block-navigation-submenu > .wp-block-navigation__submenu-container {
+    margin-left: -44px !important;
+    /*balances out the padding-left: 44px that was passed down to the submenu items, because we pushed the "Team" submenu parents to the left, so they aligned with the plain menu items. */
+  }
+
+  /* Parent label sits inline, doesn't stretch */
+  .wp-block-navigation-submenu > .wp-block-navigation-item__content {
+    display: inline-flex !important;
+    align-items: center;
+    min-width: 0;
+    padding-right: 4px;
+  }
+
+  /* Large chevron tap zone pinned right of the label */
   .wp-block-navigation-submenu__toggle {
     display: flex !important;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
+    width: 44px !important;
+    min-height: 44px !important;
+    cursor: pointer;
+    background: transparent;
   }
 
-  /* Submenu parent wraps label + toggle on one row */
-  .wp-block-navigation-submenu {
-    display: flex !important;
-    flex-wrap: wrap;
-    flex-direction: row !important;
-    align-items: center;
-    justify-content: center;
+  /* Bigger chevron SVG */
+  .wp-block-navigation-submenu__toggle svg {
+    width: 22px !important;
+    height: 22px !important;
   }
 
-  /* Parent label sits inline next to the toggle */
-  .wp-block-navigation-submenu > .wp-block-navigation-item__content {
-    display: inline-block !important;
-    min-width: 0;
+  /* Tap feedback */
+  .wp-block-navigation-submenu__toggle:active {
+    background-color: rgba(0, 0, 0, 0.08);
   }
 
   /* Hide submenus by default */
@@ -186,10 +220,10 @@ responsive wrapper — so that selector never matches.
     display: block !important;
   }
 
-  /* Indent submenu items */
+  /* Indent submenu children */
   .wp-block-navigation__submenu-container .wp-block-navigation-item__content {
     padding-left: 2rem;
-    font-size: 0.9em;
+    font-size: 1rem;
     opacity: 0.8;
   }
 }

@@ -79,55 +79,72 @@ function submenu_hover_logic() {
         //    Mouseleave removes is-force-closed so hover works normally next time.
 
 
-        function initSubmenus() {
-            const submenus = document.querySelectorAll('.wp-block-navigation-submenu');
-            // If WP's Interactivity API hasn't rendered the nav yet, bail and let the MutationObserver retry
-            if (submenus.length === 0) return false;
+     function initSubmenus() {
+    const submenus = document.querySelectorAll('.wp-block-navigation-submenu');
+    // If WP's Interactivity API hasn't rendered the nav yet, bail and let the MutationObserver retry
+    if (submenus.length === 0) return false;
 
-            submenus.forEach(function (submenu) {
-                  const toggleButton = submenu.querySelector(':scope > button.wp-block-navigation-submenu__toggle');
-                // grabs the chevron toggle button.
+    submenus.forEach(function (submenu) {
+        const toggleButton = submenu.querySelector(':scope > button.wp-block-navigation-submenu__toggle');
+        // grabs the chevron toggle button.
 
-                // Don't mark as initialized until we've confirmed the toggle button exists —
-                // if we set the flag before this check and toggleButton is null, we bail early
-                // but the flag is already set so the MutationObserver never retries.
-                if (!toggleButton) return;
+        // Don't mark as initialized until we've confirmed the toggle button exists —
+        // if we set the flag before this check and toggleButton is null, we bail early
+        // but the flag is already set so the MutationObserver never retries.
+        if (!toggleButton) return;
 
-                // Skip if we've already attached listeners to this submenu
-                if (submenu.dataset.initialized) return;
-                submenu.dataset.initialized = 'true';
+        // Skip if we've already attached listeners to this submenu
+        if (submenu.dataset.initialized) return;
+        submenu.dataset.initialized = 'true';
 
-                // Click toggles is-force-closed on/off.
-                // e.stopPropagation() prevents the document-level click handler below from
-                // removing is-force-closed immediately after we just added it.
-                toggleButton.addEventListener('click', function (e) {
-                    e.stopPropagation();
-                    // If currently force-closed, remove it so hover takes back over.
-                    // If currently open (via hover), force-close it.
-                    submenu.classList.toggle('is-force-closed');
-                    // Flip aria-expanded to match — this is what the CSS chevron rotation watches
-                    const isClosed = submenu.classList.contains('is-force-closed');
-                    toggleButton.setAttribute('aria-expanded', isClosed ? 'false' : 'true');
-                });
+        // Click toggles is-force-closed on/off.     
+        // capture phase (true) ensures our handler runs before WP's bubble-phase handlers.
+        toggleButton.addEventListener('click', function (e) {
+            e.stopImmediatePropagation();
+               // stopImmediatePropagation() prevents WP's Interactivity API handlers on the
+        // same button from firing after ours.
+            e.preventDefault();
 
-                // Reset force-closed when mouse leaves so hover works normally next visit
-                submenu.addEventListener('mouseleave', function () {
-                    submenu.classList.remove('is-force-closed');
-                    toggleButton.setAttribute('aria-expanded', 'false');
-                });
+            if (window.matchMedia('(max-width: 600px)').matches) {
+                // Mobile: no hover state, so just directly toggle aria-expanded.
+                // is-force-closed is not used on mobile.
+                const isOpen = toggleButton.getAttribute('aria-expanded') === 'true';
+                toggleButton.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
+            } else {
+                // Desktop: hover opens submenus, so this clicking even force-closes them.
+                 submenu.classList.toggle('is-force-closed');
+                 // this toggle flips the class. If it was absent, it's now added. If it was present, it's now removed. The toggle happens first.
+                 // If currently force-closed, remove it so hover takes back over.
+                // If currently open (via hover), force-close it.
+                const isClosed = submenu.classList.contains('is-force-closed');
+                // in older browsers, toggle wouldn't reliably give a boolean. So we're defensively checking if the classList contains the is-force-closed class instead. 
+                // This syncs aria-expanded to match. if force-closed, chevron points down (false), if open, chevron points up (true).
+                toggleButton.setAttribute('aria-expanded', isClosed ? 'false' : 'true');
+            }
+        }, true); // true = capture phase, fires BEFORE WP's handlers
+
+        // Reset force-closed when mouse leaves so hover works normally next visit.
+        // Skip on touch/mobile — mouseleave fires on tap there and closes submenus unintentionally.
+        submenu.addEventListener('mouseleave', function () {
+            if (window.matchMedia('(max-width: 600px)').matches) return;
+            submenu.classList.remove('is-force-closed');
+            toggleButton.setAttribute('aria-expanded', 'false');
+        });
+    });
+
+    // Clicking outside removes is-force-closed from all submenus.
+    // Skip on mobile — not needed since is-force-closed isn't used there.
+    document.addEventListener('click', function (e) {
+        if (window.matchMedia('(max-width: 600px)').matches) return;
+        if (!e.target.closest('.wp-block-navigation-submenu')) {
+            document.querySelectorAll('.wp-block-navigation-submenu.is-force-closed').forEach(function (s) {
+                s.classList.remove('is-force-closed');
             });
-
-            // Clicking outside removes is-force-closed from all submenus
-            document.addEventListener('click', function (e) {
-                if (!e.target.closest('.wp-block-navigation-submenu')) {
-                    document.querySelectorAll('.wp-block-navigation-submenu.is-force-closed').forEach(function (s) {
-                        s.classList.remove('is-force-closed');
-                    });
-                }
-            });
-
-            return true;
         }
+    });
+
+    return true;
+}
 
         // Try immediately in case the nav is already rendered, then fall back to watching for WP's
         // Interactivity API to finish rendering the nav — it runs after DOMContentLoaded so the
