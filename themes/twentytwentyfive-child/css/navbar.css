@@ -89,7 +89,7 @@ header
     .wp-block-navigation__container
     > .wp-block-navigation-item:last-child
     a {
-    padding: 0.5rem !important;
+    padding: 1rem 1.5rem !important;
   }
 }
 
@@ -142,14 +142,10 @@ Mobile submenu logic (max-width: 600px)
 ============================================
 On mobile WP renders nav inside a modal overlay. Submenus are hidden by
 default and shown only when aria-expanded is true on the toggle button.
+
 We don't use the .wp-block-navigation__responsive-container parent selector
 here because the submenu ul is a direct child of the nav item, not the
 responsive wrapper — so that selector never matches.
-
-Split layout: the parent link fills the left portion of the row and remains
-fully clickable. The chevron toggle owns a fixed-width zone on the right,
-separated by a visible divider. align-items: stretch ensures the chevron
-zone is always as tall as the link text, even if it wraps.
 ============================================ */
 
 @media (max-width: 600px) {
@@ -225,6 +221,15 @@ zone is always as tall as the link text, even if it wraps.
     padding-left: 2rem;
     font-size: 1rem;
     opacity: 0.8;
+  }
+
+  /* Ensure donate button row stays centred */
+  .wp-block-navigation__responsive-container-content
+    .wp-block-navigation__container
+    > .wp-block-navigation-item:last-child {
+    display: flex !important;
+    justify-content: center !important;
+    width: 100% !important;
   }
 }
 
