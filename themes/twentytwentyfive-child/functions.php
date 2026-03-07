@@ -64,23 +64,20 @@ add_action( 'post_updated', function( $post_id ) {
   bypass it entirely and own the state ourselves via CSS classes.
 */
 
-function remove_submenu_parent_href() {
+function submenu_hover_logic() {
     ?>
     <script>
         // DESKTOP SUBMENU LOGIC
         // =====================
         // Hover open/close is handled entirely by CSS — no JS needed for that.
         //
-        // JS only handles two things:
+        // JS only handles:
         //
         // 1. CLICK TO CLOSE — toggles is-force-closed on the submenu, which beats
         //    the CSS hover rule and hides the menu even while the mouse is inside.
         //    aria-expanded is flipped manually to keep the chevron rotation in sync.
         //    Mouseleave removes is-force-closed so hover works normally next time.
-        //
-        // 2. HREF REMOVAL — strips the href from parent label links (e.g. "Team",
-        //    "Support") so clicking them doesn't navigate anywhere, and forwards
-        //    those clicks to the chevron toggle button instead.
+
 
         function initSubmenus() {
             const submenus = document.querySelectorAll('.wp-block-navigation-submenu');
@@ -88,9 +85,7 @@ function remove_submenu_parent_href() {
             if (submenus.length === 0) return false;
 
             submenus.forEach(function (submenu) {
-                const parentLink = submenu.querySelector(':scope > a.wp-block-navigation-item__content');
-                // finds the direct child <a> tag inside that submenu item, which is the "People" or "Support" label link. The :scope > makes sure we only grab the immediate child and not any <a> tags deeper inside the submenu list.
-                const toggleButton = submenu.querySelector(':scope > button.wp-block-navigation-submenu__toggle');
+                  const toggleButton = submenu.querySelector(':scope > button.wp-block-navigation-submenu__toggle');
                 // grabs the chevron toggle button.
 
                 // Don't mark as initialized until we've confirmed the toggle button exists —
@@ -101,24 +96,6 @@ function remove_submenu_parent_href() {
                 // Skip if we've already attached listeners to this submenu
                 if (submenu.dataset.initialized) return;
                 submenu.dataset.initialized = 'true';
-
-                // Strip href so clicking people/support doesn't navigate anywhere
-                if (parentLink) {
-                    parentLink.removeAttribute('href');
-                    // strips the href so clicking the link doesn't navigate anywhere.
-                    parentLink.style.cursor = 'pointer';
-                    // since we removed the href, the browser would normally show a default cursor, so this keeps it looking clickable.
-                }
-
-                // Forward clicks on the parent label to the toggle button so clicking "Team" or
-                // "Support" text behaves the same as clicking the chevron
-                if (parentLink && toggleButton) {
-                    parentLink.addEventListener('click', function (e) {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        toggleButton.click();
-                    });
-                }
 
                 // Click toggles is-force-closed on/off.
                 // e.stopPropagation() prevents the document-level click handler below from
@@ -166,7 +143,7 @@ function remove_submenu_parent_href() {
     </script>
     <?php
 }
-add_action('wp_footer', 'remove_submenu_parent_href');
+add_action('wp_footer', 'submenu_hover_logic');
 
 
 // ****************** show more button logic
