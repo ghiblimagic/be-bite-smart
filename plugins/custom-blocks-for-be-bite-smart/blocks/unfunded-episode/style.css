@@ -120,3 +120,46 @@
 .uec-preview {
   opacity: 0.7;
 }
+
+/* ── Responsive ── */
+@media (max-width: 600px) {
+  .uec-inner {
+    flex-direction: column;
+  }
+
+  /* Thumbnail becomes a horizontal banner */
+  .uec-thumb {
+    width: auto;
+    flex-direction: row;
+    margin: 0;
+    padding: 12px 16px;
+    border-right: none;
+    border-bottom: 1px solid #dde4ea;
+    justify-content: flex-start;
+    gap: 10px;
+  }
+
+  .uec-thumb-icon {
+    font-size: 22px;
+  }
+
+  .uec-thumb-label {
+    font-size: 0.875rem;
+  }
+
+  /* Tighten body padding */
+  .uec-body {
+    padding: 14px 18px 18px;
+  }
+
+  /*remove "needs funding" badge on mobile screens, the pending funding covers it for small screens. Looks too busy with both of them on mobile. */
+  .uec-badge {
+    display: none;
+  }
+
+  /* Re-order so badge sits above the episode number */
+  .uec-inner {
+    display: flex;
+    flex-direction: column;
+  }
+}

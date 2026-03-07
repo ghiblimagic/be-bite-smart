@@ -145,7 +145,7 @@ wp_enqueue_script(
     'episode-card-block',
     plugins_url( 'blocks/episode-card/block.js', __FILE__ ),
     array( 'wp-blocks', 'wp-block-editor', 'wp-components', 'wp-element', 'wp-i18n' ),
-    '1.0',
+    '1.0.1',
     true
 );
 wp_enqueue_script(
@@ -161,7 +161,7 @@ wp_enqueue_script(
     'unfunded-episode',
     plugins_url( 'blocks/unfunded-episode/block.js', __FILE__ ),
     array( 'wp-blocks', 'wp-block-editor', 'wp-components', 'wp-element', 'wp-i18n' ),
-    '1.0',
+    '1.0.1',
     true
 );
 

@@ -34,8 +34,7 @@
       vimeoUrlEs: { type: "string", default: "" },
       thumbnailUrl: { type: "string", default: "" },
       thumbnailId: { type: "number" },
-      downloadUrlEn: { type: "string", default: "" },
-      downloadUrlEs: { type: "string", default: "" },
+      downloadsPageUrl: { type: "string", default: "" }, // ← replaces downloadUrlEn / downloadUrlEs
     },
 
     edit: ({ attributes, setAttributes }) => {
@@ -134,28 +133,14 @@
 
             wp.element.createElement("hr", { style: { margin: "20px 0" } }),
 
-            wp.element.createElement(
-              "p",
-              { style: { marginBottom: "8px", fontWeight: "500" } },
-              __("Download Files", "custom-blocks"),
-            ),
+            // ── Downloads page URL (replaces per-episode download fields) ──
             wp.element.createElement(TextControl, {
-              label: __("Download URL (English)", "custom-blocks"),
-              value: attributes.downloadUrlEn,
-              onChange: (val) => setAttributes({ downloadUrlEn: val }),
-              placeholder: "Google Drive or Dropbox link",
+              label: __("Downloads Page URL", "custom-blocks"),
+              value: attributes.downloadsPageUrl,
+              onChange: (val) => setAttributes({ downloadsPageUrl: val }),
+              placeholder: "https://yoursite.com/downloads",
               help: __(
-                "Paste Google Drive, Dropbox, or direct download link",
-                "custom-blocks",
-              ),
-            }),
-            wp.element.createElement(TextControl, {
-              label: __("Download URL (Spanish)", "custom-blocks"),
-              value: attributes.downloadUrlEs,
-              onChange: (val) => setAttributes({ downloadUrlEs: val }),
-              placeholder: "Google Drive or Dropbox link",
-              help: __(
-                "Paste Google Drive, Dropbox, or direct download link",
+                "Link to the page where visitors can download videos and coloring books.",
                 "custom-blocks",
               ),
             }),
@@ -257,35 +242,8 @@
         return match ? match[1] : null;
       };
 
-      // Convert Google Drive and Dropbox URLs to direct download links
-      const convertToDirectDownload = (url) => {
-        if (!url) return null;
-
-        // Google Drive: https://drive.google.com/file/d/1ABC123XYZ/view
-        //           → https://drive.google.com/uc?export=download&id=1ABC123XYZ
-        const driveMatch = url.match(/drive\.google\.com\/file\/d\/([^\/]+)/);
-        if (driveMatch) {
-          return `https://drive.google.com/uc?export=download&id=${driveMatch[1]}`;
-        }
-
-        // Dropbox: ?dl=0 → ?dl=1
-        if (url.includes("dropbox.com")) {
-          if (url.includes("?dl=")) {
-            return url.replace(/\?dl=0/, "?dl=1");
-          } else if (url.includes("dl=0")) {
-            return url.replace(/dl=0/, "dl=1");
-          } else {
-            return url + (url.includes("?") ? "&dl=1" : "?dl=1");
-          }
-        }
-
-        return url;
-      };
-
       const vimeoIdEn = getVimeoId(attributes.vimeoUrlEn);
       const vimeoIdEs = getVimeoId(attributes.vimeoUrlEs);
-      const downloadUrlEn = convertToDirectDownload(attributes.downloadUrlEn);
-      const downloadUrlEs = convertToDirectDownload(attributes.downloadUrlEs);
 
       return wp.element.createElement(
         "article",
@@ -296,7 +254,6 @@
           "data-vimeo-es": vimeoIdEs,
         },
 
-        // Card container
         // custom-block-card — shared card styles live in global CSS
         // custom-block-border — shared border styles live in global CSS
         wp.element.createElement(
@@ -314,7 +271,6 @@
               "div",
               // video-thumbnail-wrapper — shared video styles live in global CSS
               { className: "video-thumbnail-wrapper" },
-
               wp.element.createElement(
                 "div",
                 { className: "video-thumbnail" },
@@ -336,7 +292,6 @@
                   }),
                 ),
               ),
-
               // video-player — shared styles live in global CSS
               wp.element.createElement("div", { className: "video-player" }),
             ),
@@ -421,36 +376,33 @@
                   "Watch Now",
                 ),
               ),
-
-              // Download Buttons
-              (downloadUrlEn || downloadUrlEs) &&
-                wp.element.createElement(
-                  "div",
-                  { className: "download-buttons" },
-                  downloadUrlEn &&
-                    wp.element.createElement(
-                      "a",
-                      {
-                        href: downloadUrlEn,
-                        download: true,
-                        className: "download-button",
-                        "aria-label": "Download English version",
-                      },
-                      wp.element.createElement("span", null, "Download (EN)"),
-                    ),
-                  downloadUrlEs &&
-                    wp.element.createElement(
-                      "a",
-                      {
-                        href: downloadUrlEs,
-                        download: true,
-                        className: "download-button",
-                        "aria-label": "Download Spanish version",
-                      },
-                      wp.element.createElement("span", null, "Download (ES)"),
-                    ),
-                ),
             ),
+
+            // ── Download note (replaces per-episode download buttons) ──
+            attributes.downloadsPageUrl &&
+              wp.element.createElement(
+                "div",
+                { className: "download-note" },
+                wp.element.createElement(
+                  "p",
+                  { className: "download-note-text" },
+                  wp.element.createElement(
+                    "strong",
+                    null,
+                    "Want the video or coloring books?",
+                  ),
+                ),
+
+                wp.element.createElement(
+                  "a",
+                  {
+                    href: attributes.downloadsPageUrl,
+                    className:
+                      "download-link-btn block-toggle-btn is-style-outline",
+                  },
+                  "Go to Downloads",
+                ),
+              ),
           ),
         ),
       );
